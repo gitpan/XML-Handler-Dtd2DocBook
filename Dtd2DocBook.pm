@@ -5,7 +5,7 @@ use base qw(XML::Handler::Dtd2Html);
 
 use vars qw($VERSION);
 
-$VERSION="0.40";
+$VERSION="0.41";
 
 sub new {
 	my $proto = shift;

@@ -1,5 +1,5 @@
 
-PATH_SHEET=\some-where\docbook-xsl-1.62.0 # FIXME
+PATH_SHEET=\some-where\docbook-xsl-1.62.4 # FIXME
 
 
 all:

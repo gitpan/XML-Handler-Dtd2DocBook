@@ -3,13 +3,25 @@
 use strict;
 
 use Getopt::Std;
+use Pod::Usage;
 use IO::File;
 use XML::SAX::Expat;
 use XML::SAX::Writer;
 use XML::Handler::Dtd2DocBook;
 
 my %opts;
-getopts('CdHMl:p:t:o:x:Z', \%opts);
+getopts('CDdHhMvl:p:t:o:x:Z', \%opts)
+		or pod2usage(-verbose => 0);
+
+if ($opts{h}) {
+	pod2usage(-verbose => 0);
+}
+
+if ($opts{v}) {
+	print "$0\n";
+	print "XML::Handler::Dtd2DocBook Version $XML::Handler::Dtd2DocBook::VERSION\n";
+	exit(0);
+}
 
 my $file = $ARGV[0];
 die "No input file\n"
@@ -53,6 +65,7 @@ if (exists $opts{d}) {
 			title			=> $opts{t},
 			examples		=> \@examples,
 			flag_comment	=> !exists($opts{C}),
+			flag_date		=> !exists($opts{D}),
 			flag_href		=> exists($opts{H}),
 			flag_multi		=> exists($opts{M}),
 			flag_zombi		=> exists($opts{Z}),
@@ -98,7 +111,7 @@ __END__
 
 dtd2db - Generate a DocBook documentation from a DTD
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 dtd2db [B<-d>] [B<-C> | B<-M>] [B<-HZ>] [B<-o> I<filename>] [B<-t> I<title>] [B<-x> 'I<example1.xml> I<example2.xml> ...'] [B<-l> I<language> | B<-p> I<path>] I<file.xml>
 
@@ -110,6 +123,10 @@ dtd2db [B<-d>] [B<-C> | B<-M>] [B<-HZ>] [B<-o> I<filename>] [B<-t> I<title>] [B<
 
 Suppress all comments.
 
+=item -D
+
+Suppress date generation.
+
 =item -d
 
 Generate a clean DTD (without comment).
@@ -117,6 +134,10 @@ Generate a clean DTD (without comment).
 =item -H
 
 Disable generation of links in comments.
+
+=item -h
+
+Display help.
 
 =item -l
 
@@ -137,6 +158,10 @@ Specify the path of templates.
 =item -t
 
 Specify the title of the DocBook files.
+
+=item -v
+
+Display Version.
 
 =item -x
 
